@@ -1,0 +1,27 @@
+{
+  "name": "NMP-OpenLayers-5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "ol": "^5.2.0",
+    "parcel-bundler": "^1.10.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html",
+    "build": "parcel build --public-url . index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnneliesD/NMP-OpenLayers-5.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnneliesD/NMP-OpenLayers-5/issues"
+  },
+  "homepage": "https://github.com/AnneliesD/NMP-OpenLayers-5#readme"
+}

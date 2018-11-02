@@ -62563,15 +62563,15 @@ var PICC = new _Tile.default({
   })
 }); //ANNELIES: creating a scaleline
 
-var scale = new _control.ScaleLine(); //ANNELIES: coordinates mouse position
-
+//var scale = new _control.ScaleLine(); //ANNELIES: coordinates mouse position
+/* 
 var mousePositionControl = new _MousePosition.default({
   coordinateFormat: (0, _coordinate.createStringXY)(4),
   projection: 'EPSG:31370',
   className: 'custom-mouse-position',
   target: document.getElementById('coordinates'),
   undefinedHTML: '&nbsp;'
-});
+}); */
 /*//////////////
 /    THE MAP   /
 //////////////*/
@@ -62584,7 +62584,7 @@ var map = new _Map.default({
     center: [171171, 147873],
     zoom: 2
   }),
-  controls: [scale, mousePositionControl]
+  controls: [mousePositionControl]
 });
 },{"ol/ol.css":"node_modules/ol/ol.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/layer/Tile":"node_modules/ol/layer/Tile.js","ol/source.js":"node_modules/ol/source.js","ol/proj/proj4":"node_modules/ol/proj/proj4.js","ol/proj.js":"node_modules/ol/proj.js","ol/source/TileWMS.js":"node_modules/ol/source/TileWMS.js","ol/proj/proj4-src.js":"node_modules/ol/proj/proj4-src.js","ol/control.js":"node_modules/ol/control.js","ol/control/MousePosition.js":"node_modules/ol/control/MousePosition.js","ol/coordinate.js":"node_modules/ol/coordinate.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

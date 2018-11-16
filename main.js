@@ -11,6 +11,10 @@ import proj4 from 'ol/proj/proj4-src.js';
 import {defaults as defaultControls, ScaleLine} from 'ol/control.js';
 import MousePosition from 'ol/control/MousePosition.js';
 import {createStringXY} from 'ol/coordinate.js';
+import {Vector as VectorLayer} from 'ol/layer.js';
+import {Stroke, Style} from 'ol/style.js';
+import {WFS} from 'ol/format.js';
+import VectorSource from 'ol/source/Vector.js';
 
 //JULIEN: define EPSG 31370
 proj4.defs("EPSG:31370","+proj=lcc +lat_1=51.16666723333333 +lat_2=49.8333339 +lat_0=90 +lon_0=4.367486666666666" +
@@ -75,6 +79,30 @@ var PICC = new TileLayer({
 			serverType: 'geoserver',
           })
 	});
+
+// JULIEN: Bron van de WFS verklaren om later aan te vullen met fetch API
+const WFSsource = new VectorSource();
+
+// JULIEN: Effectieve WFS laag, met zelf gekozen stijl (hier blauw)
+var WFSlayer = new VectorLayer({
+	source: WFSsource,
+	style: new Style({
+		stroke: new Stroke({
+		color: 'rgba(0, 0, 255, 1.0)',
+		width: 2
+	  })
+	})
+});
+
+//Features opvragen via MapGuide aan de hand van fetch API en toevoegen aan WFSsource
+fetch('http://localhost:8008/mapguide/mapagent/mapagent.fcgi?REQUEST=GETFEATURE&SERVICE=WFS&' +
+		'TYPENAME=ns222480773:Refprv&VERSION=1.1.0&srsname=EPSG:31370&USERNAME=Administrator&PASSWORD=admin')
+	.then((response) => {
+		return response.text();
+	}).then( (gml) => {
+		var features = new WFS().readFeatures(gml);
+		WFSsource.addFeatures(features);
+	});
     
 //ANNELIES: creating a scaleline
 var scale = new ScaleLine();
@@ -97,10 +125,11 @@ var map = new Map({
   layers: [
     OSMlayer,
 	GRBlayer,
-    OrthoVL,
-    OrthoWAL,
-    Urbis,
-    PICC
+    //OrthoVL,
+    //OrthoWAL,
+    //Urbis,
+    //PICC,
+	WFSlayer
     ],
   view: new View({
     projection: proj31370,
@@ -109,4 +138,6 @@ var map = new Map({
     }),
   controls: [scale, mousePositionControl]
 });
-
+		
+		
+		

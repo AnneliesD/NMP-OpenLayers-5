@@ -196,9 +196,14 @@ module.bundle.Module = Module;
 var parent = module.bundle.parent;
 
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = "" || location.hostname;
+  var hostname = 'http://localhost:8008/mapguide/mapagent/mapagent.fcgi?REQUEST=GETFEATURE&SERVICE=WFS&' +
+		'TYPENAME=ns222480773:Refprv&VERSION=1.1.0&srsname=EPSG:31370&USERNAME=Administrator&PASSWORD=admin';
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "57347" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58040" + '/');
+>>>>>>> 3abe91d49623b4d7caa5b63cf72a769aa7a25e05
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

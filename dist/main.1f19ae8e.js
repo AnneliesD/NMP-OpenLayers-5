@@ -62493,6 +62493,7 @@ var _coordinate = require("ol/coordinate.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//to see if it works
 //JULIEN: importing necessary modules from OpenLayers 5
 //JULIEN: define EPSG 31370
 _proj4Src.default.defs("EPSG:31370", "+proj=lcc +lat_1=51.16666723333333 +lat_2=49.8333339 +lat_0=90 +lon_0=4.367486666666666" + " +x_0=150000.013 +y_0=5400088.438 +ellps=intl +towgs84=-106.868628,52.297783,-103.723893,0.336570,-0.456955,1.842183,-1.2747 +units=m +no_defs");
@@ -62502,7 +62503,8 @@ var proj31370 = (0, _proj2.get)('EPSG:31370');
 proj31370.setExtent([0, 0, 300000, 400000]); //JULIEN: initialize OSM layer
 
 var OSMlayer = new _Tile.default({
-  source: new _source.OSM()
+  source: new _source.OSM(),
+  visible: false
 });
 /*ANNELIES: all the WMS layers: GRB-basiskaart, orthofoto's Vlaanderen,
 orthofoto's Wallonië, Urbis en PICC
@@ -62533,7 +62535,8 @@ var OrthoVL = new _Tile.default({
       'LAYERS': 'Ortho'
     },
     serverType: 'geoserver'
-  })
+  }),
+  visible: false
 });
 var OrthoWAL = new _Tile.default({
   source: new _TileWMS.default({
@@ -62542,7 +62545,8 @@ var OrthoWAL = new _Tile.default({
       'LAYERS': '0'
     },
     serverType: 'geoserver'
-  })
+  }),
+  visible: false
 });
 var Urbis = new _Tile.default({
   source: new _TileWMS.default({
@@ -62551,7 +62555,8 @@ var Urbis = new _Tile.default({
       'LAYERS': '0'
     },
     serverType: 'geoserver'
-  })
+  }),
+  visible: true
 });
 var PICC = new _Tile.default({
   source: new _TileWMS.default({
@@ -62560,18 +62565,22 @@ var PICC = new _Tile.default({
       'LAYERS': '1,3,4,5,7,9,10,11,12,14,15,16,17,19,20,21,23,24,25,26,27,28,29'
     },
     serverType: 'geoserver'
-  })
+  }),
+  visible: true
 }); //ANNELIES: creating a scaleline
 
-//var scale = new _control.ScaleLine(); //ANNELIES: coordinates mouse position
-/* 
+var scale = new _control.ScaleLine({
+  target: document.getElementById('scale'),
+  className: 'scalebar'
+}); //ANNELIES: coordinates mouse position
+
 var mousePositionControl = new _MousePosition.default({
   coordinateFormat: (0, _coordinate.createStringXY)(4),
   projection: 'EPSG:31370',
   className: 'custom-mouse-position',
   target: document.getElementById('coordinates'),
   undefinedHTML: '&nbsp;'
-}); */
+});
 /*//////////////
 /    THE MAP   /
 //////////////*/
@@ -62582,10 +62591,23 @@ var map = new _Map.default({
   view: new _View.default({
     projection: proj31370,
     center: [171171, 147873],
-    zoom: 2
+    zoom: 2,
+    minZoom: 2
   }),
-  controls: [mousePositionControl]
-});
+  controls: [scale, mousePositionControl]
+}); //var name = document.querySelector('input[name="baselayer"]:checked').getAttribute("value");
+//console.log(name);
+//console.log(name.getAttribute("value"))
+//console.log('we got there');
+//ANNELIES: change the layer corresponding to its radiobutton
+
+var x = 1;
+
+function tryThis() {
+  console.log(x);
+}
+
+;
 },{"ol/ol.css":"node_modules/ol/ol.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/layer/Tile":"node_modules/ol/layer/Tile.js","ol/source.js":"node_modules/ol/source.js","ol/proj/proj4":"node_modules/ol/proj/proj4.js","ol/proj.js":"node_modules/ol/proj.js","ol/source/TileWMS.js":"node_modules/ol/source/TileWMS.js","ol/proj/proj4-src.js":"node_modules/ol/proj/proj4-src.js","ol/control.js":"node_modules/ol/control.js","ol/control/MousePosition.js":"node_modules/ol/control/MousePosition.js","ol/coordinate.js":"node_modules/ol/coordinate.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -62613,11 +62635,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65288" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51872" + '/');
->>>>>>> f8bce9c1ae1e6c7d7fc6ce42bcbd2a6f183b2334
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50681" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

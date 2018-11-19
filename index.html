@@ -3,18 +3,69 @@
   <head>
     <meta charset="utf-8">
     <title>NMP</title>
-    <style>
-      html, body, #map-container {
-        margin: 0;
-        height: 100%;
-        width: 100%;
-        font-family: sans-serif;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <div id="map-container"></div>
-    <div id="coordinates"></div>
+    <div class="column left">
+        <div id="map-container">
+        </div>
+        <div class="map-elements">
+          <div id="coordinates">
+          </div>
+          <div id="scale">
+            <div class="scalebar">
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class='column right'>
+      <h1>To try all functionalities of the map</h1> <br>
+      <div class="button" onclick="tryThis()">Scenario</div> <br><br>
+      <form>
+        <input type="radio" name="baselayer" value="GRBlayer"  onclick="changelayer()"> GRB Basiskaart <br>
+        <input type="radio" name="baselayer" value="OSMlayer" onclick="changelayer()"> OpenStreetMap <br>
+        <input type="radio" name="baselayer" value="PICC" checked="true" onclick="changelayer()"> Basiskaart Wallonië <br>
+        <input type="radio" name="baselayer" value="Urbis" onclick="changelayer()"> Basiskaart Brussel <br>
+        <input type="radio" name="baselayer" value="OrthoVL" onclick="changelayer()"> Orthofoto's Vlaanderen <br>
+        <input type="radio" name="baselayer" value="OrthoWal" onclick="changelayer()"> Orthofoto's Wallonië <br>
+      </form>
+    </div>
+    <script src="main.js" type="text/javascript"> </script>
+    <script scr="functions.js" type="text/javascript"></script>
+    <script>
+    //the script is written here as it will not work from a js file     
+       
+        var PICC = {visible: false, test: 'PICC'};
+        var GRBlayer = {visible: false, test : 'GRBlayer'};
+        var OSMlayer = {visible: false, test: 'OSMlayer'};
+        var Urbis = {visible: false, test: 'Urbis'};
+        var OrthoVL = {visible: false, test: 'OrthoVL'};
+        var OrthoWal = {visible: false, test: 'OrthoWal'};
+        function changelayer(){
+          this.list = document.querySelectorAll('input[name="baselayer"]:not(:checked)');
+          var name = document.querySelector('input[name="baselayer"]:checked')
+          this.val = name.getAttribute("value");
+          console.log(name);
+          console.log(list);
+          console.log(val);
+          //demand the layer to be changed based on the name of the variable
+          console.log(window[val]);
+          window[val].visible = "True"
+          console.log(PICC)
+          console.log(GRBlayer)
+          console.log(OSMlayer);
+          console.log(Urbis);
+          console.log(OrthoVL);
+          console.log(OrthoWal);
+          //link the value to the name of the variable of the layer 
+        };
+
+        function tryThis(){
+          console.log(x)
+          };
+
+      </script>
   </body>
-  <script src="main.js"></script>
+  
+  
 </html>

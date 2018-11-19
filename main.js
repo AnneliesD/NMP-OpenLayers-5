@@ -1,3 +1,6 @@
+//to see if it works
+
+
 //JULIEN: importing necessary modules from OpenLayers 5
 import 'ol/ol.css';
 import Map from 'ol/Map';
@@ -12,6 +15,7 @@ import {defaults as defaultControls, ScaleLine} from 'ol/control.js';
 import MousePosition from 'ol/control/MousePosition.js';
 import {createStringXY} from 'ol/coordinate.js';
 
+
 //JULIEN: define EPSG 31370
 proj4.defs("EPSG:31370","+proj=lcc +lat_1=51.16666723333333 +lat_2=49.8333339 +lat_0=90 +lon_0=4.367486666666666" +
 	" +x_0=150000.013 +y_0=5400088.438 +ellps=intl +towgs84=-106.868628,52.297783,-103.723893,0.336570,-0.456955,1.842183,-1.2747 +units=m +no_defs");
@@ -23,7 +27,8 @@ proj31370.setExtent([0, 0, 300000, 400000]);
 
 //JULIEN: initialize OSM layer
 var OSMlayer = new TileLayer({
-	source: new OSM()
+    source: new OSM(),
+    visible: false
 });
 
 /*ANNELIES: all the WMS layers: GRB-basiskaart, orthofoto's Vlaanderen,
@@ -49,7 +54,8 @@ var OrthoVL = new TileLayer({
             url: "http://geoservices.informatievlaanderen.be/raadpleegdiensten/omwrgbmrvl/wms",
             params: {'LAYERS': 'Ortho' },
 			serverType: 'geoserver',
-          })
+          }),
+    visible: false
 	});
     
 var OrthoWAL = new TileLayer({
@@ -57,7 +63,8 @@ var OrthoWAL = new TileLayer({
             url: "http://geoservices.wallonie.be/arcgis/services/IMAGERIE/ORTHO_2016/MapServer/WmsServer",
             params: {'LAYERS': '0' },
 			serverType: 'geoserver',
-          })
+          }),
+    visible: false
 	});
     
 var Urbis = new TileLayer({
@@ -65,7 +72,8 @@ var Urbis = new TileLayer({
             url: "http://www.gis.irisnet.be/arcgis/services/basemap/urbisNL/MapServer/WMSServer",
             params: {'LAYERS': '0' },
 			serverType: 'geoserver',
-          })
+          }),
+    visible: true
 	});
 
 var PICC = new TileLayer({
@@ -73,11 +81,15 @@ var PICC = new TileLayer({
             url: "http://geoservices.wallonie.be/arcgis/services/TOPOGRAPHIE/PICC_VDIFF/MapServer/WmsServer",
             params: {'LAYERS': '1,3,4,5,7,9,10,11,12,14,15,16,17,19,20,21,23,24,25,26,27,28,29' },
 			serverType: 'geoserver',
-          })
+          }),
+    visible: true
 	});
     
 //ANNELIES: creating a scaleline
-var scale = new ScaleLine();
+var scale = new ScaleLine({
+    target: document.getElementById('scale'),
+    className: 'scalebar'
+});
 
 //ANNELIES: coordinates mouse position
 var mousePositionControl = new MousePosition({
@@ -105,8 +117,19 @@ var map = new Map({
   view: new View({
     projection: proj31370,
 	center: [171171, 147873],
-	zoom: 2
+    zoom: 2,
+    minZoom: 2
     }),
   controls: [scale, mousePositionControl]
 });
 
+//var name = document.querySelector('input[name="baselayer"]:checked').getAttribute("value");
+//console.log(name);
+//console.log(name.getAttribute("value"))
+//console.log('we got there');
+//ANNELIES: change the layer corresponding to its radiobutton
+
+var x = 1
+function tryThis(){
+    console.log(x)
+};

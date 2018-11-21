@@ -125,10 +125,10 @@ var map = new Map({
   layers: [
     OSMlayer,
 	GRBlayer,
-    //OrthoVL,
-    //OrthoWAL,
-    //Urbis,
-    //PICC,
+    OrthoVL,
+    OrthoWAL,
+    Urbis,
+    PICC,
 	WFSlayer
     ],
   view: new View({
@@ -138,6 +138,3 @@ var map = new Map({
     }),
   controls: [scale, mousePositionControl]
 });
-		
-		
-		

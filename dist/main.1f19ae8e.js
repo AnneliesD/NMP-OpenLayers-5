@@ -82742,8 +82742,11 @@ var _format = require("ol/format.js");
 
 var _Vector = _interopRequireDefault(require("ol/source/Vector.js"));
 
+var _Object = _interopRequireDefault(require("ol/Object"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//to see if it works
 //JULIEN: importing necessary modules from OpenLayers 5
 //JULIEN: define EPSG 31370
 _proj4Src.default.defs("EPSG:31370", "+proj=lcc +lat_1=51.16666723333333 +lat_2=49.8333339 +lat_0=90 +lon_0=4.367486666666666" + " +x_0=150000.013 +y_0=5400088.438 +ellps=intl +towgs84=-106.868628,52.297783,-103.723893,0.336570,-0.456955,1.842183,-1.2747 +units=m +no_defs");
@@ -82753,21 +82756,26 @@ var proj31370 = (0, _proj2.get)('EPSG:31370');
 proj31370.setExtent([0, 0, 300000, 400000]); //JULIEN: initialize OSM layer
 
 var OSMlayer = new _Tile.default({
-  source: new _source.OSM()
+  name: "OpenStreetMap",
+  source: new _source.OSM(),
+  visible: false
 });
 /*ANNELIES: all the WMS layers: GRB-basiskaart, orthofoto's Vlaanderen,
 orthofoto's Wallonië, Urbis en PICC
 */
 
 var GRBlayer = new _Tile.default({
+  name: "GRB",
   source: new _TileWMS.default({
+    //title: "GRB",
     url: 'http://geoservices.informatievlaanderen.be/raadpleegdiensten/GRB-basiskaart/wms',
     params: {
       'LAYERS': 'GRB_BSK'
     },
     serverType: 'geoserver'
   })
-}); //ANNELIES: verwijderen van singleTile en ratio geeft hetzelfde beeld als met 
+});
+console.log(GRBlayer.get('name')); //ANNELIES: verwijderen van singleTile en ratio geeft hetzelfde beeld als met 
 
 /* var GRBlayer = new TileLayer({
 	source: new TileWMS({
@@ -82778,40 +82786,48 @@ var GRBlayer = new _Tile.default({
 	}); */
 
 var OrthoVL = new _Tile.default({
+  name: "Ortho",
   source: new _TileWMS.default({
     url: "http://geoservices.informatievlaanderen.be/raadpleegdiensten/omwrgbmrvl/wms",
     params: {
       'LAYERS': 'Ortho'
     },
     serverType: 'geoserver'
-  })
+  }),
+  visible: false
 });
 var OrthoWAL = new _Tile.default({
+  name: "OrthoWal",
   source: new _TileWMS.default({
     url: "http://geoservices.wallonie.be/arcgis/services/IMAGERIE/ORTHO_2016/MapServer/WmsServer",
     params: {
       'LAYERS': '0'
     },
     serverType: 'geoserver'
-  })
+  }),
+  visible: false
 });
 var Urbis = new _Tile.default({
+  name: "Urbis",
   source: new _TileWMS.default({
     url: "http://www.gis.irisnet.be/arcgis/services/basemap/urbisNL/MapServer/WMSServer",
     params: {
       'LAYERS': '0'
     },
     serverType: 'geoserver'
-  })
+  }),
+  visible: true
 });
 var PICC = new _Tile.default({
+  name: "PICC",
   source: new _TileWMS.default({
     url: "http://geoservices.wallonie.be/arcgis/services/TOPOGRAPHIE/PICC_VDIFF/MapServer/WmsServer",
     params: {
       'LAYERS': '1,3,4,5,7,9,10,11,12,14,15,16,17,19,20,21,23,24,25,26,27,28,29'
     },
     serverType: 'geoserver'
-  })
+  }),
+  visible: true
 }); // JULIEN: Bron van de WFS verklaren om later aan te vullen met fetch API
 
 var WFSsource = new _Vector.default(); // JULIEN: Effectieve WFS laag, met zelf gekozen stijl (hier blauw)
@@ -82833,7 +82849,10 @@ fetch('http://localhost:8008/mapguide/mapagent/mapagent.fcgi?REQUEST=GETFEATURE&
   WFSsource.addFeatures(features);
 }); //ANNELIES: creating a scaleline
 
-var scale = new _control.ScaleLine(); //ANNELIES: coordinates mouse position
+var scale = new _control.ScaleLine({
+  target: document.getElementById('scale'),
+  className: 'scalebar'
+}); //ANNELIES: coordinates mouse position
 
 var mousePositionControl = new _MousePosition.default({
   coordinateFormat: (0, _coordinate.createStringXY)(4),
@@ -82849,18 +82868,31 @@ var mousePositionControl = new _MousePosition.default({
 var map = new _Map.default({
   target: 'map-container',
   layers: [OSMlayer, GRBlayer, //OrthoVL,
-  OrthoWAL,
-  Urbis,
-  PICC,
+  //OrthoWAL,
+  //Urbis,
+  //PICC,
   WFSlayer],
   view: new _View.default({
     projection: proj31370,
     center: [171171, 147873],
-    zoom: 2
+    zoom: 2,
+    minZoom: 2
   }),
   controls: [scale, mousePositionControl]
-});
-},{"ol/ol.css":"node_modules/ol/ol.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/layer/Tile":"node_modules/ol/layer/Tile.js","ol/source.js":"node_modules/ol/source.js","ol/proj/proj4":"node_modules/ol/proj/proj4.js","ol/proj.js":"node_modules/ol/proj.js","ol/source/TileWMS.js":"node_modules/ol/source/TileWMS.js","ol/proj/proj4-src.js":"node_modules/ol/proj/proj4-src.js","ol/control.js":"node_modules/ol/control.js","ol/control/MousePosition.js":"node_modules/ol/control/MousePosition.js","ol/coordinate.js":"node_modules/ol/coordinate.js","ol/layer.js":"node_modules/ol/layer.js","ol/style.js":"node_modules/ol/style.js","ol/format.js":"node_modules/ol/format.js","ol/source/Vector.js":"node_modules/ol/source/Vector.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+}); //var name = document.querySelector('input[name="baselayer"]:checked').getAttribute("value");
+//console.log(name);
+//console.log(name.getAttribute("value"))
+//console.log('we got there');
+//ANNELIES: change the layer corresponding to its radiobutton
+
+var x = 1;
+
+function tryThis() {
+  console.log(x);
+}
+
+;
+},{"ol/ol.css":"node_modules/ol/ol.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/layer/Tile":"node_modules/ol/layer/Tile.js","ol/source.js":"node_modules/ol/source.js","ol/proj/proj4":"node_modules/ol/proj/proj4.js","ol/proj.js":"node_modules/ol/proj.js","ol/source/TileWMS.js":"node_modules/ol/source/TileWMS.js","ol/proj/proj4-src.js":"node_modules/ol/proj/proj4-src.js","ol/control.js":"node_modules/ol/control.js","ol/control/MousePosition.js":"node_modules/ol/control/MousePosition.js","ol/coordinate.js":"node_modules/ol/coordinate.js","ol/layer.js":"node_modules/ol/layer.js","ol/style.js":"node_modules/ol/style.js","ol/format.js":"node_modules/ol/format.js","ol/source/Vector.js":"node_modules/ol/source/Vector.js","ol/Object":"node_modules/ol/Object.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -82885,10 +82917,9 @@ module.bundle.Module = Module;
 var parent = module.bundle.parent;
 
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = 'http://localhost:8008/mapguide/mapagent/mapagent.fcgi?REQUEST=GETFEATURE&SERVICE=WFS&' +
-		'TYPENAME=ns222480773:Refprv&VERSION=1.1.0&srsname=EPSG:31370&USERNAME=Administrator&PASSWORD=admin';
+  var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58040" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55121" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

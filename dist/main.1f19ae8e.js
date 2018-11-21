@@ -82742,6 +82742,8 @@ var _format = require("ol/format.js");
 
 var _Vector = _interopRequireDefault(require("ol/source/Vector.js"));
 
+var _Object = _interopRequireDefault(require("ol/Object"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //to see if it works
@@ -82754,6 +82756,7 @@ var proj31370 = (0, _proj2.get)('EPSG:31370');
 proj31370.setExtent([0, 0, 300000, 400000]); //JULIEN: initialize OSM layer
 
 var OSMlayer = new _Tile.default({
+  name: "OpenStreetMap",
   source: new _source.OSM(),
   visible: false
 });
@@ -82762,14 +82765,17 @@ orthofoto's Wallonië, Urbis en PICC
 */
 
 var GRBlayer = new _Tile.default({
+  name: "GRB",
   source: new _TileWMS.default({
+    //title: "GRB",
     url: 'http://geoservices.informatievlaanderen.be/raadpleegdiensten/GRB-basiskaart/wms',
     params: {
       'LAYERS': 'GRB_BSK'
     },
     serverType: 'geoserver'
   })
-}); //ANNELIES: verwijderen van singleTile en ratio geeft hetzelfde beeld als met 
+});
+console.log(GRBlayer.get('name')); //ANNELIES: verwijderen van singleTile en ratio geeft hetzelfde beeld als met 
 
 /* var GRBlayer = new TileLayer({
 	source: new TileWMS({
@@ -82780,6 +82786,7 @@ var GRBlayer = new _Tile.default({
 	}); */
 
 var OrthoVL = new _Tile.default({
+  name: "Ortho",
   source: new _TileWMS.default({
     url: "http://geoservices.informatievlaanderen.be/raadpleegdiensten/omwrgbmrvl/wms",
     params: {
@@ -82790,6 +82797,7 @@ var OrthoVL = new _Tile.default({
   visible: false
 });
 var OrthoWAL = new _Tile.default({
+  name: "OrthoWal",
   source: new _TileWMS.default({
     url: "http://geoservices.wallonie.be/arcgis/services/IMAGERIE/ORTHO_2016/MapServer/WmsServer",
     params: {
@@ -82800,6 +82808,7 @@ var OrthoWAL = new _Tile.default({
   visible: false
 });
 var Urbis = new _Tile.default({
+  name: "Urbis",
   source: new _TileWMS.default({
     url: "http://www.gis.irisnet.be/arcgis/services/basemap/urbisNL/MapServer/WMSServer",
     params: {
@@ -82810,6 +82819,7 @@ var Urbis = new _Tile.default({
   visible: true
 });
 var PICC = new _Tile.default({
+  name: "PICC",
   source: new _TileWMS.default({
     url: "http://geoservices.wallonie.be/arcgis/services/TOPOGRAPHIE/PICC_VDIFF/MapServer/WmsServer",
     params: {
@@ -82882,7 +82892,7 @@ function tryThis() {
 }
 
 ;
-},{"ol/ol.css":"node_modules/ol/ol.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/layer/Tile":"node_modules/ol/layer/Tile.js","ol/source.js":"node_modules/ol/source.js","ol/proj/proj4":"node_modules/ol/proj/proj4.js","ol/proj.js":"node_modules/ol/proj.js","ol/source/TileWMS.js":"node_modules/ol/source/TileWMS.js","ol/proj/proj4-src.js":"node_modules/ol/proj/proj4-src.js","ol/control.js":"node_modules/ol/control.js","ol/control/MousePosition.js":"node_modules/ol/control/MousePosition.js","ol/coordinate.js":"node_modules/ol/coordinate.js","ol/layer.js":"node_modules/ol/layer.js","ol/style.js":"node_modules/ol/style.js","ol/format.js":"node_modules/ol/format.js","ol/source/Vector.js":"node_modules/ol/source/Vector.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"ol/ol.css":"node_modules/ol/ol.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/layer/Tile":"node_modules/ol/layer/Tile.js","ol/source.js":"node_modules/ol/source.js","ol/proj/proj4":"node_modules/ol/proj/proj4.js","ol/proj.js":"node_modules/ol/proj.js","ol/source/TileWMS.js":"node_modules/ol/source/TileWMS.js","ol/proj/proj4-src.js":"node_modules/ol/proj/proj4-src.js","ol/control.js":"node_modules/ol/control.js","ol/control/MousePosition.js":"node_modules/ol/control/MousePosition.js","ol/coordinate.js":"node_modules/ol/coordinate.js","ol/layer.js":"node_modules/ol/layer.js","ol/style.js":"node_modules/ol/style.js","ol/format.js":"node_modules/ol/format.js","ol/source/Vector.js":"node_modules/ol/source/Vector.js","ol/Object":"node_modules/ol/Object.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -82909,7 +82919,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50681" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55121" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

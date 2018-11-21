@@ -18,6 +18,7 @@ import {Vector as VectorLayer} from 'ol/layer.js';
 import {Stroke, Style} from 'ol/style.js';
 import {WFS} from 'ol/format.js';
 import VectorSource from 'ol/source/Vector.js';
+import BaseObject from 'ol/Object';
 
 
 //JULIEN: define EPSG 31370
@@ -31,6 +32,7 @@ proj31370.setExtent([0, 0, 300000, 400000]);
 
 //JULIEN: initialize OSM layer
 var OSMlayer = new TileLayer({
+    name : "OpenStreetMap",
     source: new OSM(),
     visible: false
 });
@@ -39,12 +41,15 @@ var OSMlayer = new TileLayer({
 orthofoto's Wallonië, Urbis en PICC
 */
 var GRBlayer = new TileLayer({
+    name: "GRB",
 	source: new TileWMS({
+            //title: "GRB",
             url: 'http://geoservices.informatievlaanderen.be/raadpleegdiensten/GRB-basiskaart/wms',
             params: {'LAYERS': 'GRB_BSK' },
 			serverType: 'geoserver',
           })
-	});
+    });
+console.log(GRBlayer.get('name'))
 //ANNELIES: verwijderen van singleTile en ratio geeft hetzelfde beeld als met 
 /* var GRBlayer = new TileLayer({
 	source: new TileWMS({
@@ -54,6 +59,7 @@ var GRBlayer = new TileLayer({
           })
 	}); */
 var OrthoVL = new TileLayer({
+    name: "Ortho",
 	source: new TileWMS({
             url: "http://geoservices.informatievlaanderen.be/raadpleegdiensten/omwrgbmrvl/wms",
             params: {'LAYERS': 'Ortho' },
@@ -63,6 +69,7 @@ var OrthoVL = new TileLayer({
 	});
     
 var OrthoWAL = new TileLayer({
+    name : "OrthoWal",
 	source: new TileWMS({
             url: "http://geoservices.wallonie.be/arcgis/services/IMAGERIE/ORTHO_2016/MapServer/WmsServer",
             params: {'LAYERS': '0' },
@@ -72,6 +79,7 @@ var OrthoWAL = new TileLayer({
 	});
     
 var Urbis = new TileLayer({
+    name: "Urbis",
 	source: new TileWMS({
             url: "http://www.gis.irisnet.be/arcgis/services/basemap/urbisNL/MapServer/WMSServer",
             params: {'LAYERS': '0' },
@@ -81,6 +89,7 @@ var Urbis = new TileLayer({
 	});
 
 var PICC = new TileLayer({
+    name: "PICC",
 	source: new TileWMS({
             url: "http://geoservices.wallonie.be/arcgis/services/TOPOGRAPHIE/PICC_VDIFF/MapServer/WmsServer",
             params: {'LAYERS': '1,3,4,5,7,9,10,11,12,14,15,16,17,19,20,21,23,24,25,26,27,28,29' },
